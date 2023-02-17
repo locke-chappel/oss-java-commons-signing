@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.signing;
+package io.github.lc.oss.commons.signing;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -15,7 +15,7 @@ import java.security.cert.X509Certificate;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 
-import com.github.lc.oss.commons.util.IoTools;
+import io.github.lc.oss.commons.util.IoTools;
 
 public class Util {
     public static KeyPair loadKeyPair(String keyStorePath, String alias, char[] password) {

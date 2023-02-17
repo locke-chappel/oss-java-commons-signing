@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.signing;
+package io.github.lc.oss.commons.signing;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
@@ -7,8 +7,8 @@ import java.security.PublicKey;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.github.lc.oss.commons.testing.AbstractTest;
-import com.github.lc.oss.commons.util.IoTools;
+import io.github.lc.oss.commons.testing.AbstractTest;
+import io.github.lc.oss.commons.util.IoTools;
 
 public class UtilTest extends AbstractTest {
     @Test

@@ -1,5 +1,5 @@
-module com.github.lc.oss.commons.signing {
-    requires com.github.lc.oss.commons.util;
+module io.github.lc.oss.commons.signing {
+    requires io.github.lc.oss.commons.util;
 
-    exports com.github.lc.oss.commons.signing;
+    exports io.github.lc.oss.commons.signing;
 }

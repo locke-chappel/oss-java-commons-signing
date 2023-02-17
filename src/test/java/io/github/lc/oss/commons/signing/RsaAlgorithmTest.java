@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.signing;
+package io.github.lc.oss.commons.signing;
 
 import java.io.FileInputStream;
 import java.security.KeyStore;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import com.github.lc.oss.commons.testing.AbstractTest;
+import io.github.lc.oss.commons.testing.AbstractTest;
 
 public class RsaAlgorithmTest extends AbstractTest {
     @Test

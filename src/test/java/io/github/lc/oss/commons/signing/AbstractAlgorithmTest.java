@@ -1,9 +1,9 @@
-package com.github.lc.oss.commons.signing;
+package io.github.lc.oss.commons.signing;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.github.lc.oss.commons.testing.AbstractTest;
+import io.github.lc.oss.commons.testing.AbstractTest;
 
 public class AbstractAlgorithmTest extends AbstractTest {
     private static class TestClass extends AbstractAlgorithm {

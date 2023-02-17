@@ -1,4 +1,4 @@
-package com.github.lc.oss.commons.signing;
+package io.github.lc.oss.commons.signing;
 
 import java.nio.charset.StandardCharsets;
 
