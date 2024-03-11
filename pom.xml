@@ -12,7 +12,7 @@
     <version>1.0.10</version>
     <name>${project.artifactId}</name>
     <description>A generic Java based signing library</description>
-    <url>https://github.com/locke-chappel/oss-commons-signing</url>
+    <url>https://github.com/locke-chappel/oss-java-commons-signing</url>
 
     <licenses>
         <license>
