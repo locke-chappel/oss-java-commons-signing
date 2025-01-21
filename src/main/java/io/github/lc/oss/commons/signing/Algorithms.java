@@ -42,42 +42,66 @@ public class Algorithms {
     }
 
     private static class Cache {
-        public static Map<String, Algorithm> ALGORITHMS = new HashMap<>();
+        public static Map<String, Algorithm> ALL = new HashMap<>();
+        public static Map<String, Algorithm> HMAC = new HashMap<>();
+        public static Map<String, Algorithm> KEY = new HashMap<>();
     }
 
     public static Set<Algorithm> all() {
-        return Collections.unmodifiableSet(new HashSet<>(Cache.ALGORITHMS.values()));
+        return Collections.unmodifiableSet(new HashSet<>(Cache.ALL.values()));
+    }
+
+    /**
+     * @return The subset of all registered algorithms that implement an
+     *         {@linkplain HmacAlgorithm} (e.g. HS256, HS384, HS512, etc.)
+     */
+    public static Set<Algorithm> hmacAlgorithms() {
+        return Collections.unmodifiableSet(new HashSet<>(Cache.HMAC.values()));
+    }
+
+    /**
+     * @return The subset of all registered algorithms that implement an
+     *         {@linkplain AbstractKeyAlgorithm} (e.g. RS256, ES256, ED25519, etc.)
+     */
+    public static Set<Algorithm> keyAlgorithms() {
+        return Collections.unmodifiableSet(new HashSet<>(Cache.KEY.values()));
     }
 
     public static Algorithm get(String id) {
-        return Cache.ALGORITHMS.get(id);
+        return Cache.ALL.get(id);
     }
 
     public static boolean has(String id) {
-        return Cache.ALGORITHMS.containsKey(id);
+        return Cache.ALL.containsKey(id);
     }
 
     public static Algorithm register(Algorithm alg) {
-        synchronized (Cache.ALGORITHMS) {
+        synchronized (Cache.ALL) {
             if (alg == null || alg.getId() == null || alg.getId().trim().equals("")) {
                 throw new IllegalArgumentException("Algorithm and it's ID are required.");
             }
 
-            if (Cache.ALGORITHMS.containsKey(alg.getId())) {
+            if (Cache.ALL.containsKey(alg.getId())) {
                 throw new RuntimeException(String.format("%s has already been registered", alg.getId()));
             }
 
-            return Cache.ALGORITHMS.put(alg.getId(), alg);
+            if (alg instanceof HmacAlgorithm) {
+                Cache.HMAC.put(alg.getId(), alg);
+            } else if (alg instanceof AbstractKeyAlgorithm) {
+                Cache.KEY.put(alg.getId(), alg);
+            }
+
+            return Cache.ALL.put(alg.getId(), alg);
         }
     }
 
     public static Algorithm unregister(Algorithm alg) {
-        synchronized (Cache.ALGORITHMS) {
+        synchronized (Cache.ALL) {
             if (alg == null || alg.getId() == null || alg.getId().trim().equals("")) {
                 throw new IllegalArgumentException("Algorithm and it's ID are required.");
             }
 
-            return Cache.ALGORITHMS.remove(alg.getId());
+            return Cache.ALL.remove(alg.getId());
         }
     }
 

@@ -1,5 +1,8 @@
 package io.github.lc.oss.commons.signing;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +11,6 @@ import io.github.lc.oss.commons.testing.AbstractTest;
 public class AlgorithmsTest extends AbstractTest {
     @Test
     public void test_caching() {
-
         Algorithm result = Algorithms.get(null);
         Assertions.assertNull(result);
 
@@ -28,9 +30,44 @@ public class AlgorithmsTest extends AbstractTest {
             Assertions.assertNull(Algorithms.get(alg.getId()));
             Algorithms.register(alg);
             Assertions.assertSame(alg, Algorithms.get(alg.getId()));
+
+            Assertions.assertTrue(Algorithms.hmacAlgorithms().contains(alg));
+            Assertions.assertFalse(Algorithms.keyAlgorithms().contains(alg));
         } finally {
             Algorithms.unregister(alg);
         }
+
+        final Algorithm alg2 = new AbstractAlgorithm("id2", "SuperCool", 1337) {
+            @Override
+            public boolean isSignatureValid(byte[] secret, byte[] data, byte[] signature) {
+                return false;
+            }
+
+            @Override
+            public String getSignature(byte[] secret, byte[] data) {
+                return null;
+            }
+        };
+        try {
+            Assertions.assertNull(Algorithms.get(alg2.getId()));
+            Algorithms.register(alg2);
+            Assertions.assertSame(alg2, Algorithms.get(alg2.getId()));
+
+            Assertions.assertFalse(Algorithms.hmacAlgorithms().contains(alg2));
+            Assertions.assertFalse(Algorithms.keyAlgorithms().contains(alg2));
+        } finally {
+            Algorithms.unregister(alg2);
+        }
+
+        Set<Algorithm> a = new HashSet<>(Algorithms.hmacAlgorithms());
+        Set<Algorithm> b = new HashSet<>(Algorithms.keyAlgorithms());
+        Assertions.assertTrue(a.retainAll(b));
+        Assertions.assertTrue(a.isEmpty());
+
+        a = new HashSet<>(Algorithms.hmacAlgorithms());
+        b = new HashSet<>(Algorithms.keyAlgorithms());
+        Assertions.assertTrue(b.retainAll(a));
+        Assertions.assertTrue(b.isEmpty());
     }
 
     @Test
